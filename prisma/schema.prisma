@@ -6,6 +6,81 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Roles {
+  ID           Int      @id @default(autoincrement())
+  name         String
+  created_date DateTime @default(now())
+
+  Users Users[]
+}
+
+model ProductType {
+  ID           String   @id @default(uuid())
+  name         String
+  created_date DateTime @default(now())
+
+  Cakes Cakes[]
+}
+
+model Users {
+  ID           String   @id @default(uuid())
+  role_id      Int      @default(1)
+  username     String   @unique
+  password     String
+  email        String
+  avatar       String?
+  created_date DateTime @default(now())
+
+  role Roles @relation(fields: [role_id], references: [ID])
+
+  Cakes Cakes[]
+}
+
+model Cakes {
+  ID                 String   @id @default(uuid())
+  user_id            String
+  product_type_id    String
+  name               String
+  is_best_seller     Boolean
+  is_new_arrival     Boolean
+  is_fruit_based     Boolean
+  is_nut_free        Boolean
+  is_chocolate_based Boolean
+  main_image         String
+  sub_image1         String?
+  sub_image2         String?
+  created_date       DateTime @default(now())
+
+  ProductType ProductType? @relation(fields: [product_type_id], references: [ID])
+  Users       Users?       @relation(fields: [user_id], references: [ID])
+
+  CakeVariants CakeVariants[]
+  AboutCakes   AboutCakes[]
+}
+
+model AboutCakes {
+  ID              String   @id @default(uuid())
+  cake_id         String
+  desc            String?  @db.Text
+  allergen        String?
+  ingredients     String?
+  storage_serving String?
+  created_date    DateTime
+
+  Cakes Cakes? @relation(fields: [cake_id], references: [ID])
+}
+
+model CakeVariants {
+  ID           String   @id @default(uuid())
+  cake_id      String
+  name         String
+  price        String
+  created_date DateTime
+
+  Cakes Cakes? @relation(fields: [cake_id], references: [ID])
 }
