@@ -63,6 +63,9 @@ class AuthDao {
         where: {
           username,
         },
+        include: {
+          role: true,
+        },
       });
 
       return user;
