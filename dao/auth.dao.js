@@ -15,7 +15,13 @@ class AuthDao {
         },
       });
 
-      if (isUserTaken) {
+      const isEmailTaken = await this.prisma.users.findFirst({
+        where: {
+          email,
+        },
+      });
+
+      if (isUserTaken || isEmailTaken) {
         throw new StandardError({
           success: false,
           message: `the username or email is not available. Please try another`,
