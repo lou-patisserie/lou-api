@@ -81,7 +81,11 @@ class AuthService {
         });
       }
 
-      const token = jwt.sign({ id: user.id }, JWT_SIGN, { expiresIn: "1h" });
+      const token = jwt.sign(
+        { ID: user.ID, username: user.username, email: user.email, role: user.role.name },
+        JWT_SIGN,
+        { expiresIn: "1h" }
+      );
 
       return {
         status: 200,
