@@ -10,7 +10,12 @@ class CakesDao {
 
   async getAllCakes() {
     try {
-      const cakes = await this.prisma.cakes.findMany();
+      const cakes = await this.prisma.cakes.findMany({
+        include: {
+          ProductType: true,
+          Users: true,
+        },
+      });
 
       return cakes;
     } catch (error) {
@@ -34,6 +39,10 @@ class CakesDao {
               },
             },
           ],
+        },
+        include: {
+          ProductType: true,
+          Users: true,
         },
       });
 
@@ -114,6 +123,10 @@ class CakesDao {
         },
         orderBy: {
           created_date: sort,
+        },
+        include: {
+          ProductType: true,
+          Users: true,
         },
       });
 
@@ -270,6 +283,10 @@ class CakesDao {
       const cake = await this.prisma.cakes.findUnique({
         where: {
           ID,
+        },
+        include: {
+          ProductType: true,
+          Users: true,
         },
       });
 
