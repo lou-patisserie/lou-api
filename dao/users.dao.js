@@ -8,7 +8,11 @@ class UserDao {
 
   async getAllUsers() {
     try {
-      const users = await this.prisma.users.findMany();
+      const users = await this.prisma.users.findMany({
+        include: {
+          role: true,
+        },
+      });
       return users;
     } catch (error) {
       throw new StandardError({
