@@ -1,7 +1,6 @@
 import StandardError from "../utils/http-errors/standard-error.js";
 import { PrismaClient } from "@prisma/client";
 import { generateJakartaDate } from "../utils/helpers/jakarta-time.js";
-import { convertToBoolean } from "../utils/helpers/convert-boolean.js";
 
 class CakesDao {
   constructor() {
@@ -91,14 +90,16 @@ class CakesDao {
     nutFree,
     chocolateBased,
     sort,
+    limit,
+    page,
   }) {
     const query = {
       product_type_id: typeID,
-      is_best_seller: convertToBoolean(bestSeller),
-      is_new_arrival: convertToBoolean(newArrival),
-      is_fruit_based: convertToBoolean(fruitBased),
-      is_nut_free: convertToBoolean(nutFree),
-      is_chocolate_based: convertToBoolean(chocolateBased),
+      is_best_seller: bestSeller,
+      is_new_arrival: newArrival,
+      is_fruit_based: fruitBased,
+      is_nut_free: nutFree,
+      is_chocolate_based: chocolateBased,
     };
 
     const searchQuery = {
@@ -117,6 +118,14 @@ class CakesDao {
     );
 
     try {
+      const totalCount = await this.prisma.cakes.count({
+        where: {
+          AND: [query, searchQuery],
+        },
+      });
+
+      const calculatedOffset = (page - 1) * limit;
+
       const cakes = await this.prisma.cakes.findMany({
         where: {
           AND: [query, searchQuery],
@@ -128,6 +137,8 @@ class CakesDao {
           ProductType: true,
           Users: true,
         },
+        skip: page ? calculatedOffset : 0,
+        take: limit ? limit : 6,
       });
 
       if (!cakes || cakes.length === 0) {
@@ -138,7 +149,19 @@ class CakesDao {
         });
       }
 
-      return cakes;
+      const currentPage = page || 1;
+      const totalPage = Math.ceil(totalCount / (limit || 6));
+
+      const totalCurrentData = cakes.length || 0;
+      const totalAllData = totalCount || 0;
+
+      return {
+        cakes,
+        currentPage,
+        totalPage,
+        totalCurrentData,
+        totalAllData,
+      };
     } catch (error) {
       throw new StandardError({
         success: false,

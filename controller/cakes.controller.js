@@ -32,6 +32,8 @@ async function getCakesByFlexOptions(req, res, next) {
     nutFree,
     chocolateBased,
     sort,
+    limit,
+    page,
   } = req.query;
   handleRequest(req, res, next, async (cakesService, req) => {
     const result = await cakesService.getCakesByFlexOptions({
@@ -43,6 +45,8 @@ async function getCakesByFlexOptions(req, res, next) {
       nutFree,
       chocolateBased,
       sort,
+      limit,
+      page,
     });
     return result;
   });

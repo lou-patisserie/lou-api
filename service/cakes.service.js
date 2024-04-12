@@ -1,4 +1,6 @@
 import StandardError from "../utils/http-errors/standard-error.js";
+import { convertToBoolean } from "../utils/helpers/convert-boolean.js";
+import { convertToInteger } from "../utils/helpers/convert-integer.js";
 
 class CakesService {
   constructor(cakesDao) {
@@ -187,18 +189,31 @@ class CakesService {
     nutFree,
     chocolateBased,
     sort,
+    limit,
+    page,
   }) {
+    bestSeller = convertToBoolean(bestSeller);
+    newArrival = convertToBoolean(newArrival);
+    fruitBased = convertToBoolean(fruitBased);
+    nutFree = convertToBoolean(nutFree);
+    chocolateBased = convertToBoolean(chocolateBased);
+    limit = convertToInteger(limit);
+    page = convertToInteger(page);
+
     try {
-      const cakes = await this.cakesDao.getCakesByFlexOptions({
-        name,
-        typeID,
-        bestSeller,
-        newArrival,
-        fruitBased,
-        nutFree,
-        chocolateBased,
-        sort,
-      });
+      const { cakes, currentPage, totalPage, totalCurrentData, totalAllData } =
+        await this.cakesDao.getCakesByFlexOptions({
+          name,
+          typeID,
+          bestSeller,
+          newArrival,
+          fruitBased,
+          nutFree,
+          chocolateBased,
+          sort,
+          limit,
+          page,
+        });
 
       if (!cakes || cakes.length === 0) {
         throw new StandardError({
@@ -212,7 +227,13 @@ class CakesService {
         success: true,
         status: 200,
         message: "Get cakes by Flex options",
-        data: cakes,
+        data: {
+          currentPage,
+          totalPage,
+          totalCurrentData,
+          totalAllData,
+          cakes,
+        },
       };
     } catch (error) {
       throw new StandardError({
