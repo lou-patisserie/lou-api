@@ -32,6 +32,34 @@ class VariantService {
     }
   }
 
+  async getVariantByCakeId({ cake_id }) {
+    try {
+      const variant = await this.variantDao.getVariantByCakeId({ cake_id });
+
+      if (!variant) {
+        throw new StandardError({
+          success: false,
+          message: "Variant not found.",
+          status: 404,
+        });
+      }
+
+      return {
+        success: true,
+        status: 200,
+        message: "Variant found.",
+        data: variant,
+      };
+      
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
   async getVariantById({ ID }) {
     try {
       const variant = await this.variantDao.getVariantById({ ID });
