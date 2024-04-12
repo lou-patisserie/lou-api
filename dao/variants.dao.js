@@ -54,6 +54,35 @@ class VariantDao {
     }
   }
 
+  async getVariantByCakeId({ cake_id }) {
+    try {
+      const variant = await this.prisma.cakeVariants.findFirst({
+        where: {
+          cake_id,
+        },
+        include: {
+          Cakes: true,
+        },
+      });
+
+      if (!variant) {
+        throw new StandardError({
+          success: false,
+          message: "Variant not found.",
+          status: 404,
+        });
+      }
+
+      return variant;
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
   async createVariant({ cake_id, name, price }) {
     try {
       const variant = await this.prisma.cakeVariants.create({

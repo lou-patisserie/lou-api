@@ -1,18 +1,18 @@
 import StandardError from "../utils/http-errors/standard-error.js";
 
-class VariantService {
-  constructor(variantDao) {
-    this.variantDao = variantDao;
+class AboutCakesService {
+  constructor(aboutCakesDao) {
+    this.aboutCakesDao = aboutCakesDao;
   }
 
-  async getAllVariants() {
+  async getAllAboutCake() {
     try {
-      const variants = await this.variantDao.getAllVariants();
+      const aboutCake = await this.aboutCakesDao.getAllAboutCake();
 
-      if (!variants || variants.length === 0) {
+      if (!aboutCake || aboutCake.length === 0) {
         throw new StandardError({
           success: false,
-          message: "No variant found.",
+          message: "About cake not found.",
           status: 404,
         });
       }
@@ -20,8 +20,8 @@ class VariantService {
       return {
         success: true,
         status: 200,
-        message: "List of all variants",
-        data: variants,
+        message: "List all About cake",
+        data: aboutCake,
       };
     } catch (error) {
       throw new StandardError({
@@ -32,14 +32,14 @@ class VariantService {
     }
   }
 
-  async getVariantByCakeId({ cake_id }) {
+  async getAboutCakeById({ ID }) {
     try {
-      const variant = await this.variantDao.getVariantByCakeId({ cake_id });
+      const aboutCake = await this.aboutCakesDao.getAboutCakeById({ ID });
 
-      if (!variant) {
+      if (!aboutCake || aboutCake.length === 0) {
         throw new StandardError({
           success: false,
-          message: "Variant not found.",
+          message: "About cake not found.",
           status: 404,
         });
       }
@@ -47,36 +47,8 @@ class VariantService {
       return {
         success: true,
         status: 200,
-        message: "Variant found.",
-        data: variant,
-      };
-      
-    } catch (error) {
-      throw new StandardError({
-        success: false,
-        message: error.message,
-        status: error.status,
-      });
-    }
-  }
-
-  async getVariantById({ ID }) {
-    try {
-      const variant = await this.variantDao.getVariantById({ ID });
-
-      if (!variant) {
-        throw new StandardError({
-          success: false,
-          message: "Variant not found.",
-          status: 404,
-        });
-      }
-
-      return {
-        success: true,
-        status: 200,
-        message: "Variant found.",
-        data: variant,
+        message: "About cake by id",
+        data: aboutCake,
       };
     } catch (error) {
       throw new StandardError({
@@ -87,27 +59,56 @@ class VariantService {
     }
   }
 
-  async createVariant({ cake_id, name, price }) {
+  async getAboutCakeByCakeId({ cakeID }) {
     try {
-      const variant = await this.variantDao.createVariant({
+      const aboutCake = await this.aboutCakesDao.getAboutCakeByCakeId({
+        cakeID,
+      });
+
+      if (!aboutCake || aboutCake.length === 0) {
+        throw new StandardError({
+          success: false,
+          message: "About cake not found.",
+          status: 404,
+        });
+      }
+
+      return {
+        success: true,
+        status: 200,
+        message: "About cake by cake id",
+        data: aboutCake,
+      };
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
+  async createAboutCake({
+    cake_id,
+    desc,
+    allergen,
+    ingredients,
+    storage_serving,
+  }) {
+    try {
+      const aboutCake = await this.aboutCakesDao.createAboutCake({
         cake_id,
-        name,
-        price,
+        desc,
+        allergen,
+        ingredients,
+        storage_serving,
       });
-
-      if (!variant) {
-        throw new StandardError({
-          success: false,
-          message: "Failed to create variant. Please try again.",
-          status: 500,
-        });
-      }
 
       return {
         success: true,
-        status: 200,
-        message: "Variant created.",
-        data: variant,
+        status: 201,
+        message: "About cake created",
+        data: aboutCake,
       };
     } catch (error) {
       throw new StandardError({
@@ -118,28 +119,29 @@ class VariantService {
     }
   }
 
-  async updateVariantById({ ID, cake_id, name, price }) {
+  async updateAboutCakeById({
+    ID,
+    cake_id,
+    desc,
+    allergen,
+    ingredients,
+    storage_serving,
+  }) {
     try {
-      const variant = await this.variantDao.updateVariantById({
+      const aboutCake = await this.aboutCakesDao.updateAboutCakeById({
         ID,
         cake_id,
-        name,
-        price,
+        desc,
+        allergen,
+        ingredients,
+        storage_serving,
       });
-
-      if (!variant) {
-        throw new StandardError({
-          success: false,
-          message: "Variant not found.",
-          status: 404,
-        });
-      }
 
       return {
         success: true,
         status: 200,
-        message: "Variant updated.",
-        data: variant,
+        message: "About cake updated",
+        data: aboutCake,
       };
     } catch (error) {
       throw new StandardError({
@@ -150,14 +152,14 @@ class VariantService {
     }
   }
 
-  async deleteVariantById({ ID }) {
+  async deleteAboutCakeById({ ID }) {
     try {
-      const variant = await this.variantDao.deleteVariantById({ ID });
+      const aboutCake = await this.aboutCakesDao.deleteAboutCakeById({ ID });
 
-      if (!variant) {
+      if (!aboutCake || aboutCake.length === 0) {
         throw new StandardError({
           success: false,
-          message: "Variant not found.",
+          message: "About cake not found.",
           status: 404,
         });
       }
@@ -165,8 +167,8 @@ class VariantService {
       return {
         success: true,
         status: 200,
-        message: "Variant deleted.",
-        data: variant,
+        message: "About cake deleted",
+        data: aboutCake,
       };
     } catch (error) {
       throw new StandardError({
@@ -178,4 +180,4 @@ class VariantService {
   }
 }
 
-export default VariantService;
+export default AboutCakesService;

@@ -64,10 +64,19 @@ async function deleteVariantById(req, res, next) {
   });
 }
 
+async function getVariantByCakeId(req, res, next) {
+  const { cake_id } = req.params;
+  handleRequest(req, res, next, async (variantService, req) => {
+    const result = await variantService.getVariantByCakeId({ cake_id });
+    return result;
+  });
+}
+
 export {
   getAllVariants,
   getVariantById,
   createVariant,
   updateVariantById,
   deleteVariantById,
+  getVariantByCakeId,
 };
