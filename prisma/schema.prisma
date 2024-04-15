@@ -38,7 +38,8 @@ model Users {
 
   role Roles @relation(fields: [role_id], references: [ID])
 
-  Cakes Cakes[]
+  Cakes  Cakes[]
+  AddOns AddOns[]
 }
 
 model Cakes {
@@ -83,4 +84,18 @@ model CakeVariants {
   created_date DateTime
 
   Cakes Cakes? @relation(fields: [cake_id], references: [ID])
+}
+
+model AddOns {
+  ID           String   @id @default(uuid())
+  user_id      String
+  name         String
+  desc         String
+  price        String
+  main_image   String
+  sub_image1   String?
+  sub_image2   String?
+  created_date DateTime
+
+  User Users? @relation(fields: [user_id], references: [ID])
 }
