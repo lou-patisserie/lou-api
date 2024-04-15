@@ -6,6 +6,7 @@ import cakesRoutes from "./v1/cakes.router.js";
 import usersRoutes from "./v1/users.router.js";
 import variantsRoutes from "./v1/variants.router.js";
 import aboutCakesRoutes from "./v1/about-cakes.router.js";
+import addOnsRouter from "./v1/add-ons.router.js";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/api/v1/cakes", cakesRoutes);
 router.use("/api/v1/users", usersRoutes);
 router.use("/api/v1/variants", variantsRoutes);
 router.use("/api/v1/about-cakes", aboutCakesRoutes);
+router.use("/api/v1/add-ons", addOnsRouter);
 
 export default router;
