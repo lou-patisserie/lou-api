@@ -118,6 +118,9 @@ class CakesDao {
     );
 
     try {
+      limit = limit ? parseInt(limit) : 6;
+      page = page ? parseInt(page) : 1;
+
       const totalCount = await this.prisma.cakes.count({
         where: {
           AND: [query, searchQuery],
@@ -135,7 +138,6 @@ class CakesDao {
         },
         include: {
           ProductType: true,
-          Users: true,
         },
         skip: page ? calculatedOffset : 0,
         take: limit ? limit : 6,
@@ -499,6 +501,71 @@ class CakesDao {
       }
 
       return productType;
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
+  async createVariant({ cake_id, name, price }) {
+    try {
+      const variant = await this.prisma.cakeVariants.create({
+        data: {
+          cake_id,
+          name,
+          price,
+          created_date: generateJakartaDate(),
+        },
+      });
+
+      if (!variant) {
+        throw new StandardError({
+          success: false,
+          message: "Failed to create variant. Please try again.",
+          status: 500,
+        });
+      }
+
+      return variant;
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
+  async getVariantByCakeId({ cake_id }) {
+    try {
+      const variant = await this.prisma.cakeVariants.findMany({
+        where: {
+          cake_id,
+        },
+      });
+
+      return variant;
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
+  async getAboutCakeByCakeId({ cake_id }) {
+    try {
+      const aboutCake = await this.prisma.aboutCakes.findFirst({
+        where: {
+          cake_id,
+        },
+      });
+
+      return aboutCake;
     } catch (error) {
       throw new StandardError({
         success: false,

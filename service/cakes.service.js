@@ -46,6 +46,10 @@ class CakesService {
     main_image,
     sub_image1,
     sub_image2,
+    variant_name_1,
+    variant_price_1,
+    variant_name_2,
+    variant_price_2,
   }) {
     try {
       const isProductTypeExist = await this.cakesDao.getProductTypeById({
@@ -84,11 +88,34 @@ class CakesService {
         sub_image2,
       });
 
+      let variant_1 = null;
+      let variant_2 = null;
+
+      if (variant_name_1 && variant_price_1) {
+        variant_1 = await this.cakesDao.createVariant({
+          cake_id: cake.ID,
+          name: variant_name_1,
+          price: variant_price_1,
+        });
+      }
+
+      if (variant_name_2 && variant_price_2) {
+        variant_2 = await this.cakesDao.createVariant({
+          cake_id: cake.ID,
+          name: variant_name_2,
+          price: variant_price_2,
+        });
+      }
+
       return {
         success: true,
         status: 200,
         message: "Cake created successfully.",
-        data: cake,
+        data: {
+          cake,
+          variant_1,
+          variant_2,
+        },
       };
     } catch (error) {
       throw new StandardError({
@@ -103,6 +130,14 @@ class CakesService {
     try {
       const cake = await this.cakesDao.getCakeByName({ name });
 
+      const variants = await this.cakesDao.getVariantByCakeId({
+        cake_id: cake.ID,
+      });
+
+      const aboutCake = await this.cakesDao.getAboutCakeByCakeId({
+        cake_id: cake.ID,
+      });
+
       if (!cake) {
         throw new StandardError({
           success: false,
@@ -115,7 +150,11 @@ class CakesService {
         success: true,
         status: 200,
         message: "Cake found.",
-        data: cake,
+        data: {
+          cake,
+          variants,
+          aboutCake,
+        },
       };
     } catch (error) {
       throw new StandardError({
@@ -223,6 +262,17 @@ class CakesService {
         });
       }
 
+      const cakeIds = cakes.map((cake) => cake.ID);
+
+      const getVariants = await Promise.all(
+        cakeIds.map(async (cakeId) => {
+          const variants = await this.cakesDao.getVariantByCakeId({
+            cake_id: cakeId,
+          });
+          return { cake_id: cakeId, variants };
+        })
+      );
+
       return {
         success: true,
         status: 200,
@@ -232,7 +282,11 @@ class CakesService {
           totalPage,
           totalCurrentData,
           totalAllData,
-          cakes,
+          cakes: cakes.map((cake) => {
+            const cakeVariants =
+              getVariants.find((v) => v.cake_id === cake.ID)?.variants || [];
+            return { ...cake, variants: cakeVariants };
+          }),
         },
       };
     } catch (error) {
