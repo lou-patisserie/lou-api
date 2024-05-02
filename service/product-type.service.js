@@ -18,6 +18,7 @@ class ProductTypeService {
       }
 
       return {
+        status: 200,
         success: true,
         message: "List of all product type",
         data: productType,
@@ -44,6 +45,7 @@ class ProductTypeService {
       }
 
       return {
+        status: 200,
         success: true,
         message: "Product type found.",
         data: productType,
@@ -62,6 +64,7 @@ class ProductTypeService {
       const productType = await this.productTypeDao.createProductType({ name });
 
       return {
+        status: 200,
         success: true,
         message: "Product type created successfully.",
         data: productType,
@@ -91,6 +94,7 @@ class ProductTypeService {
       }
 
       return {
+        status: 200,
         success: true,
         message: "Product type updated successfully.",
         data: productType,
@@ -119,6 +123,7 @@ class ProductTypeService {
       }
 
       return {
+        status: 200,
         success: true,
         message: "Product type deleted successfully.",
         data: productType,
