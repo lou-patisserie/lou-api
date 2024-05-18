@@ -31,11 +31,12 @@ async function getVariantById(req, res, next) {
 }
 
 async function createVariant(req, res, next) {
-  const { cake_id, name, price } = req.body;
+  const { cake_id, name, desc, price } = req.body;
   handleRequest(req, res, next, async (variantService, req) => {
     const result = await variantService.createVariant({
       cake_id,
       name,
+      desc, 
       price,
     });
     return result;
@@ -44,12 +45,13 @@ async function createVariant(req, res, next) {
 
 async function updateVariantById(req, res, next) {
   const { ID } = req.params;
-  const { cake_id, name, price } = req.body;
+  const { cake_id, name, desc, price } = req.body;
   handleRequest(req, res, next, async (variantService, req) => {
     const result = await variantService.updateVariantById({
       ID,
       cake_id,
       name,
+      desc, 
       price,
     });
     return result;

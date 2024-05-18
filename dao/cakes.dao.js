@@ -342,6 +342,12 @@ class CakesDao {
     is_fruit_based,
     is_nut_free,
     is_chocolate_based,
+    variant_name_1,
+    variant_desc_1,
+    variant_price_1,
+    variant_name_2,
+    variant_desc_2,
+    variant_price_2,
     main_image,
     sub_image1,
     sub_image2,
@@ -364,6 +370,25 @@ class CakesDao {
         },
       });
 
+      const variant = await this.prisma.cakeVariants.createMany({
+        data: [
+          {
+            cake_id: cake.ID,
+            name: variant_name_1,
+            desc: variant_desc_1,
+            price: variant_price_1,
+            created_date: generateJakartaDate(),
+          },
+          {
+            cake_id: cake.ID,
+            name: variant_name_2,
+            desc: variant_desc_2,
+            price: variant_price_2,
+            created_date: generateJakartaDate(),
+          },
+        ],
+      });
+
       if (!cake) {
         throw new StandardError({
           success: false,
@@ -372,7 +397,10 @@ class CakesDao {
         });
       }
 
-      return cake;
+      return {
+        cake: cake,
+        variant: variant,
+      };
     } catch (error) {
       throw new StandardError({
         success: false,
@@ -392,6 +420,12 @@ class CakesDao {
     is_nut_free,
     is_chocolate_based,
     main_image,
+    variant_name_1,
+    variant_desc_1,
+    variant_price_1,
+    variant_name_2,
+    variant_desc_2,
+    variant_price_2,
     sub_image1,
     sub_image2,
   }) {
@@ -414,6 +448,29 @@ class CakesDao {
         },
       });
 
+      await this.prisma.cakeVariants.deleteMany({
+        where: { cake_id: ID },
+      });
+
+      const variants = await this.prisma.cakeVariants.createMany({
+        data: [
+          {
+            cake_id: cake.ID,
+            name: variant_name_1,
+            desc: variant_desc_1,
+            price: variant_price_1,
+            created_date: generateJakartaDate(),
+          },
+          {
+            cake_id: cake.ID,
+            name: variant_name_2,
+            desc: variant_desc_2,
+            price: variant_price_2,
+            created_date: generateJakartaDate(),
+          },
+        ],
+      });
+
       if (!cake) {
         throw new StandardError({
           success: false,
@@ -422,7 +479,7 @@ class CakesDao {
         });
       }
 
-      return cake;
+      return { cake, variants };
     } catch (error) {
       throw new StandardError({
         success: false,

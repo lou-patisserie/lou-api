@@ -83,12 +83,13 @@ class VariantDao {
     }
   }
 
-  async createVariant({ cake_id, name, price }) {
+  async createVariant({ cake_id, name, price, desc }) {
     try {
       const variant = await this.prisma.cakeVariants.create({
         data: {
           cake_id,
           name,
+          desc,
           price,
           created_date: generateJakartaDate(),
         },
@@ -112,7 +113,7 @@ class VariantDao {
     }
   }
 
-  async updateVariantById({ ID, cake_id, name, price }) {
+  async updateVariantById({ ID, cake_id, name, desc, price }) {
     try {
       const variant = await this.prisma.cakeVariants.update({
         where: {
@@ -121,6 +122,7 @@ class VariantDao {
         data: {
           cake_id,
           name,
+          desc,
           price,
         },
       });

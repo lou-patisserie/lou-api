@@ -51,6 +51,7 @@ class AddOnsService {
         data: addOn,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -94,6 +95,7 @@ class AddOnsService {
         data: addOn,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -139,6 +141,7 @@ class AddOnsService {
         data: addOn,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -166,6 +169,7 @@ class AddOnsService {
         data: addOn,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,

@@ -31,18 +31,18 @@ async function getProductTypeById(req, res, next) {
 }
 
 async function createProductType(req, res, next) {
-  const { name } = req.body;
+  const { name, desc } = req.body;
   handleRequest(req, res, next, async (productTypeService, req) => {
-    const result = await productTypeService.createProductType({ name });
+    const result = await productTypeService.createProductType({ name, desc });
     return result;
   });
 }
 
 async function updateProductTypeById(req, res, next) {
   const { ID } = req.params;
-  const { name } = req.body;
+  const { name, desc } = req.body;
   handleRequest(req, res, next, async (productTypeService, req) => {
-    const result = await productTypeService.updateProductTypeById({ ID, name });
+    const result = await productTypeService.updateProductTypeById({ ID, name, desc });
     return result;
   });
 }

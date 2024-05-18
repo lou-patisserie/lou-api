@@ -54,9 +54,9 @@ async function updateUserById(req, res, next) {
 }
 
 async function updateRoleById(req, res, next) {
-  const { ID, role_id } = req.body;
+  const { ID, role_id, desc } = req.body;
   handleRequest(req, res, next, async (userService, req) => {
-    const result = await userService.updateRole({ ID, role_id });
+    const result = await userService.updateRole({ ID, role_id, desc });
     return result;
   });
 }

@@ -47,7 +47,7 @@ class ProductTypeDao {
     }
   }
 
-  async createProductType({ name }) {
+  async createProductType({ name, desc }) {
     try {
       const isProductTypeExist = await this.prisma.productType.findFirst({
         where: {
@@ -66,6 +66,7 @@ class ProductTypeDao {
       const productType = await this.prisma.productType.create({
         data: {
           name,
+          desc,
           created_date: generateJakartaDate(),
         },
       });
@@ -80,7 +81,7 @@ class ProductTypeDao {
     }
   }
 
-  async updateProductTypeById({ ID, name }) {
+  async updateProductTypeById({ ID, name, desc }) {
     try {
       const productType = await this.prisma.productType.update({
         where: {
@@ -88,6 +89,7 @@ class ProductTypeDao {
         },
         data: {
           name,
+          desc
         },
       });
 

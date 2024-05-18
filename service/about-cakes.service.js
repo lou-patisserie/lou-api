@@ -24,6 +24,7 @@ class AboutCakesService {
         data: aboutCake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -51,6 +52,7 @@ class AboutCakesService {
         data: aboutCake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -80,6 +82,7 @@ class AboutCakesService {
         data: aboutCake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -111,6 +114,7 @@ class AboutCakesService {
         data: aboutCake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -144,6 +148,7 @@ class AboutCakesService {
         data: aboutCake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -171,6 +176,7 @@ class AboutCakesService {
         data: aboutCake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,

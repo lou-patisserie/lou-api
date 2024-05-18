@@ -43,13 +43,15 @@ class CakesService {
     is_fruit_based,
     is_nut_free,
     is_chocolate_based,
+    variant_name_1,
+    variant_desc_1,
+    variant_price_1,
+    variant_name_2,
+    variant_desc_2,
+    variant_price_2,
     main_image,
     sub_image1,
     sub_image2,
-    variant_name_1,
-    variant_price_1,
-    variant_name_2,
-    variant_price_2,
   }) {
     try {
       const isProductTypeExist = await this.cakesDao.getProductTypeById({
@@ -83,41 +85,25 @@ class CakesService {
         is_fruit_based,
         is_nut_free,
         is_chocolate_based,
+        variant_name_1,
+        variant_desc_1,
+        variant_price_1,
+        variant_name_2,
+        variant_desc_2,
+        variant_price_2,
         main_image,
         sub_image1,
         sub_image2,
       });
 
-      let variant_1 = null;
-      let variant_2 = null;
-
-      if (variant_name_1 && variant_price_1) {
-        variant_1 = await this.cakesDao.createVariant({
-          cake_id: cake.ID,
-          name: variant_name_1,
-          price: variant_price_1,
-        });
-      }
-
-      if (variant_name_2 && variant_price_2) {
-        variant_2 = await this.cakesDao.createVariant({
-          cake_id: cake.ID,
-          name: variant_name_2,
-          price: variant_price_2,
-        });
-      }
-
       return {
         success: true,
         status: 200,
         message: "Cake created successfully.",
-        data: {
-          cake,
-          variant_1,
-          variant_2,
-        },
+        data: cake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -157,6 +143,7 @@ class CakesService {
         },
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -184,6 +171,7 @@ class CakesService {
         data: cake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -211,6 +199,7 @@ class CakesService {
         data: cakes,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -290,6 +279,7 @@ class CakesService {
         },
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -307,6 +297,12 @@ class CakesService {
     is_fruit_based,
     is_nut_free,
     is_chocolate_based,
+    variant_name_1,
+    variant_desc_1,
+    variant_price_1,
+    variant_name_2,
+    variant_desc_2,
+    variant_price_2,
     main_image,
     sub_image1,
     sub_image2,
@@ -333,6 +329,12 @@ class CakesService {
         is_fruit_based,
         is_nut_free,
         is_chocolate_based,
+        variant_name_1,
+        variant_desc_1,
+        variant_price_1,
+        variant_name_2,
+        variant_desc_2,
+        variant_price_2,
         main_image,
         sub_image1,
         sub_image2,
@@ -353,6 +355,7 @@ class CakesService {
         data: cake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -380,6 +383,7 @@ class CakesService {
         data: cake,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,

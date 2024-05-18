@@ -24,6 +24,7 @@ class ProductTypeService {
         data: productType,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -51,6 +52,7 @@ class ProductTypeService {
         data: productType,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -59,9 +61,9 @@ class ProductTypeService {
     }
   }
 
-  async createProductType({ name }) {
+  async createProductType({ name, desc }) {
     try {
-      const productType = await this.productTypeDao.createProductType({ name });
+      const productType = await this.productTypeDao.createProductType({ name, desc });
 
       return {
         status: 200,
@@ -70,6 +72,7 @@ class ProductTypeService {
         data: productType,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -100,6 +103,7 @@ class ProductTypeService {
         data: productType,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -129,6 +133,7 @@ class ProductTypeService {
         data: productType,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,

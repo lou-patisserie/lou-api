@@ -26,7 +26,7 @@ class UserService {
         };
       }
     } catch (err) {
-      console.log(err);
+      console.log("error :", err);
       throw new StandardError({
         success: false,
         status: err.status,
@@ -54,7 +54,7 @@ class UserService {
         data: user,
       };
     } catch (err) {
-      console.log(err);
+      console.log("error :", err);
       throw new StandardError({
         success: false,
         status: err.status,
@@ -94,7 +94,7 @@ class UserService {
         data: user,
       };
     } catch (err) {
-      console.log(err);
+      console.log("error :", err);
       throw new StandardError({
         success: false,
         status: err.status,
@@ -122,7 +122,7 @@ class UserService {
         data: user,
       };
     } catch (err) {
-      console.log(err);
+      console.log("error :", err);
       throw new StandardError({
         success: false,
         status: err.status,
@@ -181,7 +181,7 @@ class UserService {
         });
       }
     } catch (err) {
-      console.log(err);
+      console.log("error :", err);
       throw new StandardError({
         success: false,
         status: err.status,
@@ -209,7 +209,7 @@ class UserService {
         data: user,
       };
     } catch (err) {
-      console.log(err);
+      console.log("error :", err);
       throw new StandardError({
         success: false,
         status: err.status,
