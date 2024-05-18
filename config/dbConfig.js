@@ -1,7 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 
 export const prisma = new PrismaClient({
-  log: ["info"],
+  log: ["info", "warn"],
+  errorFormat: "pretty",
 });
 
 const connectDB = async () => {

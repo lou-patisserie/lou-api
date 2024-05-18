@@ -14,6 +14,7 @@ datasource db {
 model Roles {
   ID           Int      @id @default(autoincrement())
   name         String
+  desc         String
   created_date DateTime @default(now())
 
   Users Users[]
@@ -22,6 +23,7 @@ model Roles {
 model ProductType {
   ID           String   @id @default(uuid())
   name         String
+  desc         String
   created_date DateTime @default(now())
 
   Cakes Cakes[]
@@ -79,6 +81,7 @@ model AboutCakes {
 model CakeVariants {
   ID           String   @id @default(uuid())
   cake_id      String
+  desc         String
   name         String
   price        String
   created_date DateTime
