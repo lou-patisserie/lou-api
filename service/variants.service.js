@@ -24,6 +24,7 @@ class VariantService {
         data: variants,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -50,8 +51,8 @@ class VariantService {
         message: "Variant found.",
         data: variant,
       };
-      
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -79,6 +80,7 @@ class VariantService {
         data: variant,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -87,11 +89,12 @@ class VariantService {
     }
   }
 
-  async createVariant({ cake_id, name, price }) {
+  async createVariant({ cake_id, name, price, desc }) {
     try {
       const variant = await this.variantDao.createVariant({
         cake_id,
         name,
+        desc,
         price,
       });
 
@@ -110,6 +113,7 @@ class VariantService {
         data: variant,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -118,12 +122,13 @@ class VariantService {
     }
   }
 
-  async updateVariantById({ ID, cake_id, name, price }) {
+  async updateVariantById({ ID, cake_id, name, desc, price }) {
     try {
       const variant = await this.variantDao.updateVariantById({
         ID,
         cake_id,
         name,
+        desc,
         price,
       });
 
@@ -142,6 +147,7 @@ class VariantService {
         data: variant,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
@@ -169,6 +175,7 @@ class VariantService {
         data: variant,
       };
     } catch (error) {
+      console.log("error :", error);
       throw new StandardError({
         success: false,
         message: error.message,
