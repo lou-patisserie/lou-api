@@ -351,6 +351,10 @@ class CakesDao {
     main_image,
     sub_image1,
     sub_image2,
+    about_cake_desc,
+    allergen_desc,
+    ingredients_desc,
+    storage_serving_desc,
   }) {
     try {
       const cake = await this.prisma.cakes.create({
@@ -389,7 +393,18 @@ class CakesDao {
         ],
       });
 
-      if (!cake) {
+      const aboutCake = await this.prisma.aboutCakes.create({
+        data: {
+          cake_id: cake.ID,
+          desc: about_cake_desc,
+          allergen: allergen_desc,
+          ingredients: ingredients_desc,
+          storage_serving: storage_serving_desc,
+          created_date: generateJakartaDate(),
+        },
+      });
+
+      if (!cake || !variant || !aboutCake) {
         throw new StandardError({
           success: false,
           message: "Failed to create cake. Please try again.",
@@ -400,6 +415,7 @@ class CakesDao {
       return {
         cake: cake,
         variant: variant,
+        aboutCake: aboutCake,
       };
     } catch (error) {
       throw new StandardError({
@@ -428,6 +444,10 @@ class CakesDao {
     variant_price_2,
     sub_image1,
     sub_image2,
+    about_cake_desc,
+    allergen_desc,
+    ingredients_desc,
+    storage_serving_desc,
   }) {
     try {
       const cake = await this.prisma.cakes.update({
@@ -452,6 +472,31 @@ class CakesDao {
         where: { cake_id: ID },
       });
 
+      const aboutCakeRecord = await this.prisma.aboutCakes.findFirst({
+        where: {
+          cake_id: ID,
+        },
+        select: {
+          ID: true,
+        },
+      });
+
+      if (aboutCakeRecord) {
+        const deleteAbout = await this.prisma.aboutCakes.delete({
+          where: {
+            ID: aboutCakeRecord.ID,
+          },
+        });
+
+        console.log(deleteAbout, "this is delete about");
+      } else {
+        throw new StandardError({
+          success: false,
+          message: "About cake not found.",
+          status: 404,
+        });
+      }
+
       const variants = await this.prisma.cakeVariants.createMany({
         data: [
           {
@@ -471,7 +516,18 @@ class CakesDao {
         ],
       });
 
-      if (!cake) {
+      const aboutCake = await this.prisma.aboutCakes.create({
+        data: {
+          cake_id: cake.ID,
+          desc: about_cake_desc,
+          allergen: allergen_desc,
+          ingredients: ingredients_desc,
+          storage_serving: storage_serving_desc,
+          created_date: generateJakartaDate(),
+        },
+      });
+
+      if (!cake || !variants || !aboutCake) {
         throw new StandardError({
           success: false,
           message: "Cake not found.",
@@ -479,7 +535,7 @@ class CakesDao {
         });
       }
 
-      return { cake, variants };
+      return { cake, variants, aboutCake };
     } catch (error) {
       throw new StandardError({
         success: false,

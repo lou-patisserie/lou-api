@@ -71,6 +71,10 @@ async function createCake(req, res, next) {
     main_image,
     sub_image1,
     sub_image2,
+    about_cake_desc,
+    allergen_desc,
+    ingredients_desc,
+    storage_serving_desc,
   } = req.body;
   handleRequest(req, res, next, async (cakesService, req) => {
     const result = await cakesService.createCake({
@@ -91,6 +95,10 @@ async function createCake(req, res, next) {
       main_image,
       sub_image1,
       sub_image2,
+      about_cake_desc,
+      allergen_desc,
+      ingredients_desc,
+      storage_serving_desc,
     });
     return result;
   });
@@ -131,8 +139,13 @@ async function updateCakeById(req, res, next) {
     main_image,
     sub_image1,
     sub_image2,
+    about_cake_desc,
+    allergen_desc,
+    ingredients_desc,
+    storage_serving_desc,
   } = req.body;
   handleRequest(req, res, next, async (cakesService, req) => {
+    console.log(req.body, "", req.params);
     const result = await cakesService.updateCakeById({
       ID,
       product_type_id,
@@ -151,7 +164,12 @@ async function updateCakeById(req, res, next) {
       main_image,
       sub_image1,
       sub_image2,
+      about_cake_desc,
+      allergen_desc,
+      ingredients_desc,
+      storage_serving_desc,
     });
+
     return result;
   });
 }

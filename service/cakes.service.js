@@ -52,6 +52,10 @@ class CakesService {
     main_image,
     sub_image1,
     sub_image2,
+    about_cake_desc,
+    allergen_desc,
+    ingredients_desc,
+    storage_serving_desc,
   }) {
     try {
       const isProductTypeExist = await this.cakesDao.getProductTypeById({
@@ -94,6 +98,10 @@ class CakesService {
         main_image,
         sub_image1,
         sub_image2,
+        about_cake_desc,
+        allergen_desc,
+        ingredients_desc,
+        storage_serving_desc,
       });
 
       return {
@@ -306,6 +314,10 @@ class CakesService {
     main_image,
     sub_image1,
     sub_image2,
+    about_cake_desc,
+    allergen_desc,
+    ingredients_desc,
+    storage_serving_desc,
   }) {
     try {
       const isProductTypeExist = await this.cakesDao.getProductTypeById({
@@ -338,6 +350,10 @@ class CakesService {
         main_image,
         sub_image1,
         sub_image2,
+        about_cake_desc,
+        allergen_desc,
+        ingredients_desc,
+        storage_serving_desc,
       });
 
       if (!cake) {
