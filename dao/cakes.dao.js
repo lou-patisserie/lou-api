@@ -315,7 +315,19 @@ class CakesDao {
         },
       });
 
-      if (!cake) {
+      const variants = await this.prisma.cakeVariants.findMany({
+        where: {
+          cake_id: ID,
+        },
+      });
+
+      const aboutCake = await this.prisma.aboutCakes.findFirst({
+        where: {
+          cake_id: ID,
+        },
+      });
+
+      if (!cake || !variants || !aboutCake) {
         throw new StandardError({
           success: false,
           message: "Cake not found.",
@@ -323,7 +335,7 @@ class CakesDao {
         });
       }
 
-      return cake;
+      return { cake, variants, aboutCake };
     } catch (error) {
       throw new StandardError({
         success: false,
