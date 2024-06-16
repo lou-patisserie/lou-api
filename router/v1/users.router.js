@@ -16,7 +16,7 @@ import {
 const router = Router();
 
 router.get("/", adminAuthorization, getAllUsers);
-router.get("/profile", userAuthentication, getUserProfileByToken);
+router.post("/profile", userAuthentication, getUserProfileByToken);
 router.get("/:ID", userAuthentication, getUserById);
 router.put("/:ID", userAuthentication, updateUserById);
 router.put("/role/:ID", managerAuthorization, updateRoleById);
