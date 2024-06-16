@@ -327,7 +327,7 @@ class CakesDao {
         },
       });
 
-      if (!cake || !variants || !aboutCake) {
+      if (!cake) {
         throw new StandardError({
           success: false,
           message: "Cake not found.",
