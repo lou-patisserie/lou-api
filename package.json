@@ -4,8 +4,9 @@
   "description": "LouPatisserie API built using node-express-prisma-sql",
   "main": "index.js",
   "scripts": {
-    "start": "prisma generate && node app.js",
-    "dev": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
