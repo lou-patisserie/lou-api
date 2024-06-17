@@ -1,0 +1,39 @@
+{
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {
+                    "key": "Content-Security-Policy",
+                    "value": "default-src 'self'; script-src 'self' avicena.dev; style-src 'self' avicena.dev;"
+                },
+                {
+                    "key": "Strict-Transport-Security",
+                    "value": "max-age=31536000; includeSubDomains; preload;"
+                },
+                {
+                    "key": "X-Content-Type-Options",
+                    "value": "nosniff"
+                },
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                },
+                {
+                    "key": "Referrer-Policy",
+                    "value": "same-origin"
+                },
+                {
+                    "key": "Permissions-Policy",
+                    "value": "geolocation=(self), camera=(), microphone=(), fullscreen=()"
+                }
+            ]
+        }
+    ]
+}
