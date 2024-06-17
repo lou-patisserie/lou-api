@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
+    "build": "npx prisma generate && npx prisma db push",
     "dev": "nodemon app.js"
   },
   "keywords": [],
