@@ -35,6 +35,9 @@ class UserDao {
           password,
           avatar,
         },
+        include: {
+          role: true,
+        },
       });
 
       if (!user) {
