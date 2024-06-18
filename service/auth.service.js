@@ -82,7 +82,12 @@ class AuthService {
       }
 
       const token = jwt.sign(
-        { ID: user.ID, username: user.username, email: user.email, role: user.role.name },
+        {
+          ID: user.ID,
+          username: user.username,
+          email: user.email,
+          role: user.role.name,
+        },
         JWT_SIGN,
         { expiresIn: "1h" }
       );
@@ -93,6 +98,11 @@ class AuthService {
         message: "User logged in successfully",
         data: {
           token,
+          user: {
+            name: user.username,
+            role_id: user.role_id,
+            role: user.role.name,
+          },
         },
       };
     } catch (error) {
