@@ -47,6 +47,32 @@ class AddOnsDao {
     }
   }
 
+  async getAddOnsByName({ name }) {
+    try {
+      const addOns = await this.prisma.addOns.findFirst({
+        where: {
+          name,
+        },
+      });
+
+      if (!addOns || addOns.length === 0) {
+        throw new StandardError({
+          success: false,
+          message: "Add-on not found.",
+          status: 404,
+        });
+      }
+
+      return addOns;
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
   async createAddOns({
     user_id,
     name,

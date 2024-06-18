@@ -56,6 +56,14 @@ async function updateAddOnById(req, res, next) {
   });
 }
 
+async function getAddOnsByName(req, res, next) {
+  const { name } = req.query;
+  handleRequest(req, res, next, async (addOnsService, req) => {
+    const result = await addOnsService.getAddOnsByName({ name });
+    return result;
+  });
+}
+
 async function deleteAddOnById(req, res, next) {
   const { ID } = req.params;
   handleRequest(req, res, next, async (addOnsService, req) => {
@@ -64,9 +72,4 @@ async function deleteAddOnById(req, res, next) {
   });
 }
 
-export {
-  getAllAddOns,
-  createAddOns,
-  updateAddOnById,
-  deleteAddOnById,
-};
+export { getAllAddOns, createAddOns, updateAddOnById, deleteAddOnById, getAddOnsByName };
