@@ -87,11 +87,13 @@ class UserService {
         });
       }
 
+      const { password, ...userWithoutPassword } = user;
+
       return {
         status: 200,
         success: true,
         message: "User profile data",
-        data: user,
+        data: userWithoutPassword,
       };
     } catch (err) {
       console.log("error :", err);

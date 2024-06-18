@@ -1,25 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 
-export const prisma = new PrismaClient({
-  log: ["info", "warn"],
-  errorFormat: "pretty",
-});
+const prismaClientSingleton = () => {
+  const prisma = new PrismaClient();
 
-const connectDB = async () => {
-  return await prisma.$connect();
+  prisma
+    .$connect()
+    .then(() => {
+      console.log("PrismaClient Database connected successfully");
+    })
+    .catch((error) => {
+      console.error("Error connecting PrismaClient Database:", error);
+    });
+
+  return prisma;
 };
 
-export const disconnectDB = async () => {
-  await prisma.$disconnect();
-};
+const globalThis = typeof window !== "undefined" ? window : global;
 
-export const dbConn = async () => {
-  try {
-    await connectDB();
-    console.log("connected to database");
-  } catch (error) {
-    console.error("Error:", error);
-  } finally {
-    await disconnectDB();
-  }
-};
+const dbConn = globalThis.prismaGlobal ?? prismaClientSingleton();
+
+if (process.env.NODE_ENV !== "production") {
+  globalThis.prismaGlobal = dbConn;
+}
+
+export default dbConn;

@@ -47,6 +47,32 @@ class AddOnsDao {
     }
   }
 
+  async getAddOnsByName({ name }) {
+    try {
+      const addOns = await this.prisma.addOns.findFirst({
+        where: {
+          name,
+        },
+      });
+
+      if (!addOns || addOns.length === 0) {
+        throw new StandardError({
+          success: false,
+          message: "Add-on not found.",
+          status: 404,
+        });
+      }
+
+      return addOns;
+    } catch (error) {
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
   async createAddOns({
     user_id,
     name,
@@ -57,6 +83,20 @@ class AddOnsDao {
     sub_image2,
   }) {
     try {
+      const addOnExist = await this.prisma.addOns.findFirst({
+        where: {
+          name,
+        },
+      });
+
+      if (addOnExist) {
+        throw new StandardError({
+          success: false,
+          message: "Add-on name already exist.",
+          status: 400,
+        });
+      }
+
       const addOn = await this.prisma.addOns.create({
         data: {
           user_id,
@@ -116,6 +156,21 @@ class AddOnsDao {
     sub_image2,
   }) {
     try {
+      
+      const addOnExist = await this.prisma.addOns.findFirst({
+        where: {
+          name,
+        },
+      });
+
+      if (addOnExist) {
+        throw new StandardError({
+          success: false,
+          message: "Add-on name already exist.",
+          status: 400,
+        });
+      }
+
       const addOn = await this.prisma.addOns.update({
         where: {
           ID,
