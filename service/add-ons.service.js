@@ -104,6 +104,34 @@ class AddOnsService {
     }
   }
 
+  async getAddOnsByName({ name }) {
+    try {
+      const addOns = await this.AddOnsDao.getAddOnsByName({ name });
+
+      if (!addOns || addOns.length === 0) {
+        throw new StandardError({
+          success: false,
+          message: "Add-on not found.",
+          status: 404,
+        });
+      }
+
+      return {
+        success: true,
+        status: 200,
+        message: "Add-on found.",
+        data: addOns,
+      };
+    } catch (error) {
+      console.log("error :", error);
+      throw new StandardError({
+        success: false,
+        message: error.message,
+        status: error.status,
+      });
+    }
+  }
+
   async updateAddOnById({
     ID,
     user_id,
