@@ -146,7 +146,6 @@ async function updateCakeById(req, res, next) {
     storage_serving_desc,
   } = req.body;
   handleRequest(req, res, next, async (cakesService, req) => {
-    console.log(req.body, "", req.params);
     const result = await cakesService.updateCakeById({
       ID,
       product_type_id,
