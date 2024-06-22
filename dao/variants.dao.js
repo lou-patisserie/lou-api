@@ -56,7 +56,7 @@ class VariantDao {
 
   async getVariantByCakeId({ cake_id }) {
     try {
-      const variant = await this.prisma.cakeVariants.findFirst({
+      const variant = await this.prisma.cakeVariants.findMany({
         where: {
           cake_id,
         },
