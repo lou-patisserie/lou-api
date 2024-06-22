@@ -5,11 +5,14 @@ class ProductTypeService {
     this.productTypeDao = productTypeDao;
   }
 
-  async getAllProductType() {
+  async getAllProductType({ order, sort }) {
     try {
-      const productType = await this.productTypeDao.getAllProductType();
+      const productTypes = await this.productTypeDao.getAllProductType({
+        order,
+        sort,
+      });
 
-      if (!productType || productType.length === 0) {
+      if (!productTypes || productTypes.length === 0) {
         throw new StandardError({
           success: false,
           message: "No product type found.",
@@ -20,8 +23,8 @@ class ProductTypeService {
       return {
         status: 200,
         success: true,
-        message: "List of all product type",
-        data: productType,
+        message: "List of all product types",
+        data: productTypes,
       };
     } catch (error) {
       console.log("error :", error);
@@ -61,9 +64,13 @@ class ProductTypeService {
     }
   }
 
-  async createProductType({ name, desc }) {
+  async createProductType({ name, order, desc }) {
     try {
-      const productType = await this.productTypeDao.createProductType({ name, desc });
+      const productType = await this.productTypeDao.createProductType({
+        name,
+        order,
+        desc,
+      });
 
       return {
         status: 200,
@@ -81,11 +88,12 @@ class ProductTypeService {
     }
   }
 
-  async updateProductTypeById({ ID, name }) {
+  async updateProductTypeById({ ID, order, name }) {
     try {
       const productType = await this.productTypeDao.updateProductTypeById({
         ID,
         name,
+        order,
       });
 
       if (!productType) {

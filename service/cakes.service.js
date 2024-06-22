@@ -80,6 +80,16 @@ class CakesService {
         });
       }
 
+      const isCakeExist = await this.cakesDao.getCakeByName({ name });
+
+      if (isCakeExist) {
+        throw new StandardError({
+          success: false,
+          message: "Cake already exist.",
+          status: 400,
+        });
+      }
+
       const cake = await this.cakesDao.createCake({
         user_id,
         product_type_id,

@@ -6,12 +6,23 @@ class ProductTypeDao {
   constructor() {
     this.prisma = new PrismaClient();
   }
-
-  async getAllProductType() {
+  async getAllProductType({ order, sort }) {
     try {
-      const productType = await this.prisma.productType.findMany();
+      const sortOrder = sort?.toLowerCase() === "desc" ? "desc" : "asc";
 
-      return productType;
+      let productTypes;
+
+      if (order) {
+        productTypes = await this.prisma.productType.findMany({
+          orderBy: {
+            order: sortOrder,
+          },
+        });
+      } else {
+        productTypes = await this.prisma.productType.findMany();
+      }
+
+      return productTypes;
     } catch (error) {
       throw new StandardError({
         success: false,
@@ -47,7 +58,7 @@ class ProductTypeDao {
     }
   }
 
-  async createProductType({ name, desc }) {
+  async createProductType({ name, order, desc }) {
     try {
       const isProductTypeExist = await this.prisma.productType.findFirst({
         where: {
@@ -67,6 +78,7 @@ class ProductTypeDao {
         data: {
           name,
           desc,
+          order,
           created_date: generateJakartaDate(),
         },
       });
@@ -81,7 +93,7 @@ class ProductTypeDao {
     }
   }
 
-  async updateProductTypeById({ ID, name, desc }) {
+  async updateProductTypeById({ ID, name, order, desc }) {
     try {
       const productType = await this.prisma.productType.update({
         where: {
@@ -89,7 +101,8 @@ class ProductTypeDao {
         },
         data: {
           name,
-          desc
+          order,
+          desc,
         },
       });
 

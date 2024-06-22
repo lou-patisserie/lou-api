@@ -285,14 +285,6 @@ class CakesDao {
         },
       });
 
-      if (!cake) {
-        throw new StandardError({
-          success: false,
-          message: "Cake not found.",
-          status: 404,
-        });
-      }
-
       return cake;
     } catch (error) {
       throw new StandardError({
@@ -386,23 +378,30 @@ class CakesDao {
         },
       });
 
+      const variantsData = [
+        {
+          cake_id: cake.ID,
+          name: variant_name_1,
+          desc: variant_desc_1,
+          price: variant_price_1,
+          created_date: generateJakartaDate(),
+        }
+      ];
+  
+      // Add second variant if provided
+      if (variant_name_2 && variant_desc_2 && variant_price_2) {
+        variantsData.push({
+          cake_id: cake.ID,
+          name: variant_name_2,
+          desc: variant_desc_2,
+          price: variant_price_2,
+          created_date: generateJakartaDate(),
+        });
+      }
+  
+      // Create the variants
       const variant = await this.prisma.cakeVariants.createMany({
-        data: [
-          {
-            cake_id: cake.ID,
-            name: variant_name_1,
-            desc: variant_desc_1,
-            price: variant_price_1,
-            created_date: generateJakartaDate(),
-          },
-          {
-            cake_id: cake.ID,
-            name: variant_name_2,
-            desc: variant_desc_2,
-            price: variant_price_2,
-            created_date: generateJakartaDate(),
-          },
-        ],
+        data: variantsData,
       });
 
       const aboutCake = await this.prisma.aboutCakes.create({
