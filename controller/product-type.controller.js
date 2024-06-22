@@ -16,8 +16,10 @@ async function handleRequest(req, res, next, serviceFunction) {
 }
 
 async function getAllProductType(req, res, next) {
-  handleRequest(req, res, next, async (productTypeService, req) => {
-    const result = await productTypeService.getAllProductType();
+  const { order, sort } = req.query;
+
+  handleRequest(req, res, next, async (productTypeService) => {
+    const result = await productTypeService.getAllProductType({ order, sort });
     return result;
   });
 }
@@ -31,18 +33,27 @@ async function getProductTypeById(req, res, next) {
 }
 
 async function createProductType(req, res, next) {
-  const { name, desc } = req.body;
+  const { name, order, desc } = req.body;
   handleRequest(req, res, next, async (productTypeService, req) => {
-    const result = await productTypeService.createProductType({ name, desc });
+    const result = await productTypeService.createProductType({
+      name,
+      order,
+      desc,
+    });
     return result;
   });
 }
 
 async function updateProductTypeById(req, res, next) {
   const { ID } = req.params;
-  const { name, desc } = req.body;
+  const { name, order, desc } = req.body;
   handleRequest(req, res, next, async (productTypeService, req) => {
-    const result = await productTypeService.updateProductTypeById({ ID, name, desc });
+    const result = await productTypeService.updateProductTypeById({
+      ID,
+      name,
+      order,
+      desc,
+    });
     return result;
   });
 }
