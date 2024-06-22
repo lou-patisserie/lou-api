@@ -7,9 +7,9 @@ class CakesService {
     this.cakesDao = cakesDao;
   }
 
-  async getAllCakes() {
+  async getAllCakes({ sort }) {
     try {
-      const cakes = await this.cakesDao.getAllCakes();
+      const cakes = await this.cakesDao.getAllCakes({ sort });
 
       if (!cakes || cakes.length === 0) {
         throw new StandardError({

@@ -7,12 +7,15 @@ class CakesDao {
     this.prisma = new PrismaClient();
   }
 
-  async getAllCakes() {
+  async getAllCakes({ sort }) {
     try {
       const cakes = await this.prisma.cakes.findMany({
         include: {
           ProductType: true,
           Users: true,
+        },
+        orderBy: {
+          created_date: sort,
         },
       });
 

@@ -16,8 +16,9 @@ async function handleRequest(req, res, next, serviceFunction) {
 }
 
 async function getAllCakes(req, res, next) {
+  const { sort } = req.query;
   handleRequest(req, res, next, async (cakesService, req) => {
-    const result = await cakesService.getAllCakes();
+    const result = await cakesService.getAllCakes({ sort });
     return result;
   });
 }
