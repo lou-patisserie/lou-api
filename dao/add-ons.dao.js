@@ -156,21 +156,6 @@ class AddOnsDao {
     sub_image2,
   }) {
     try {
-      
-      const addOnExist = await this.prisma.addOns.findFirst({
-        where: {
-          name,
-        },
-      });
-
-      if (addOnExist) {
-        throw new StandardError({
-          success: false,
-          message: "Add-on name already exist.",
-          status: 400,
-        });
-      }
-
       const addOn = await this.prisma.addOns.update({
         where: {
           ID,

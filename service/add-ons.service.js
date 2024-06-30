@@ -134,7 +134,6 @@ class AddOnsService {
 
   async updateAddOnById({
     ID,
-    user_id,
     name,
     desc,
     price,
@@ -145,7 +144,6 @@ class AddOnsService {
     try {
       const addOn = await this.AddOnsDao.updateAddOnById({
         ID,
-        user_id,
         name,
         desc,
         price,
